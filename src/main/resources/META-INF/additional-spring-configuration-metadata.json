@@ -1,0 +1,14 @@
+{
+  "properties": [
+    {
+      "name": "imdb.url",
+      "type": "java.lang.String",
+      "description": "Url base da API do IMDB."
+    },
+    {
+      "name": "imdb.key",
+      "type": "java.lang.String",
+      "description": "Chave da Api do IMDB."
+    }
+  ]
+}

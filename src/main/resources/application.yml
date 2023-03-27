@@ -1,0 +1,17 @@
+imdb:
+  url: https://imdb-api.com/en/API
+  key: ${IMDB_API_KEY}
+
+spring:
+  profiles:
+    active: dev
+
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+
+logging:
+  level:
+    com.imersao.spring: debug
