@@ -1,4 +1,4 @@
-package com.imersao.spring.imdb;
+package com.imersao.spring.client.imdb;
 
 import feign.RequestInterceptor;
 import lombok.extern.slf4j.Slf4j;

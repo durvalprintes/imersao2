@@ -1,4 +1,4 @@
-package com.imersao.spring.imdb;
+package com.imersao.spring.client.imdb;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -13,19 +13,20 @@ public interface ImdbApi {
     default List<Content> consumeItems(String json) throws Exception {
         return StreamSupport
                 .stream(checkJson(json).get("items").spliterator(), false)
-                .map(mapper ->  Content.builder()
-                                .title(mapper.get("title").asText())
-                                .urlImage(mapper.get("image").asText())
-                                .rating(mapper.get("imDbRating").asText())
-                                .build())
+                .map(mapper ->  Content
+                                    .builder()
+                                    .title(mapper.get("title").asText())
+                                    .urlImage(mapper.get("image").asText())
+                                    .rating(mapper.get("imDbRating").asText())
+                                    .build())
                 .toList();
     }
 
     default List<Content> consumeResults(String json) throws Exception {
         return StreamSupport
                 .stream(checkJson(json).get("results").spliterator(), false)
-                .map(node ->
-                        Content.builder()
+                .map(node -> Content
+                                .builder()
                                 .id(node.get("id").asText())
                                 .title(node.get("title").asText())
                                 .urlImage(node.get("image").asText()).build())

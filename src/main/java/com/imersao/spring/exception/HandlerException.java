@@ -30,16 +30,15 @@ public class HandlerException {
         log.error("Error {}", e.getMessage());
         return new HandlerResponse(500, e.getMessage());
     }
+
 }
 
 @Data
 @RequiredArgsConstructor
 class HandlerResponse {
     private LocalDateTime datetime = LocalDateTime.now();
-
     @NonNull
     private Integer status;
-
     @NonNull
     private String message;
 }

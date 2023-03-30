@@ -6,6 +6,24 @@ spring:
   profiles:
     active: dev
 
+  kafka:
+    bootstrap-servers: localhost:9092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      client-id: imersao-java
+    consumer:
+      properties:
+        spring:
+          json:
+            trusted:
+              packages: '*'
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+
+topic:
+  sticker: generator-sticker
+
 ---
 spring:
   config:
