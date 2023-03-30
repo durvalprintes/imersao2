@@ -13,12 +13,17 @@ public interface ImdbApi {
     default List<Content> consumeItems(String json) throws Exception {
         return StreamSupport
                 .stream(checkJson(json).get("items").spliterator(), false)
-                .map(mapper ->  Content
-                                    .builder()
-                                    .title(mapper.get("title").asText())
-                                    .urlImage(mapper.get("image").asText())
-                                    .rating(mapper.get("imDbRating").asText())
-                                    .build())
+                .map(mapper -> {
+                    String rating = mapper.get("imDbRating").asText();
+                    return Content
+                            .builder()
+                            .title(mapper.get("title").asText())
+                            .urlImage(mapper.get("image").asText())
+                            .rating(rating)
+                            .evaluation(rating.isBlank() ? "" : "&bigstar;".repeat(
+                                    (int) Math.round(Double.parseDouble(rating))))
+                            .build();
+                })
                 .toList();
     }
 

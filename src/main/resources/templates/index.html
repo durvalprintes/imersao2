@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+    <link rel="stylesheet" th:href="@{https://fonts.googleapis.com/css?family=Roboto+Slab}">
+    <script th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js}"></script>
+    <link rel="stylesheet"
+          th:href="@{https://rawgit.com/shaneapen/Image-Preview-for-Links/master/image_preview_for_links.css}">
+    <script th:src="@{https://rawgit.com/shaneapen/Image-Preview-for-Links/master/image_preview_for_links.js}"></script>
+    <script type="text/javascript">
+        $(function () {
+            $('.list a').miniPreview({prefetch: 'pageload'});
+        });
+    </script>
+    <title>Imersão Java</title>
+</head>
+<body>
+<h1 th:text="${title}"></h1>
+<div class="list">
+    <table>
+        <thead>
+        <tr>
+            <th>Titulo</th>
+            <th>Imagem</th>
+            <th>Nota</th>
+            <th>Avaliação</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="content : ${contentList}">
+            <td th:text="${content.title}"></td>
+            <td>
+                <a target="_blank" th:href="${content.urlImage}"
+                   th:text="${#strings.substring(content.urlImage, 35, 50)}"></a>
+            </td>
+            <td th:text="${content.rating}"></td>
+            <td style='font-size:20px; color:gold; -webkit-text-stroke:1px black' th:utext="${content.evaluation}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

@@ -20,8 +20,8 @@ public class ImdbClientConfig {
                 urlBase,
                 template.url().contains("Search") || template.url().contains("Ratings")
                         ? template.uri(
-                        template.url()
-                                .replaceAll("(./)(.)", "$1".concat(apiKey.concat("/$2")))).url()
+                                template.url()
+                                        .replaceAll("(./)(.)", "$1".concat(apiKey.concat("/$2")))).url()
                         : template.uri(apiKey, true).url());
     }
 

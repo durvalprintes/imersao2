@@ -14,6 +14,12 @@ public interface ImdbClient {
     @GetMapping("Top250TVs")
     String getTop250Tvs();
 
+    @GetMapping("MostPopularMovies")
+    String getMostPopularMovies();
+
+    @GetMapping("MostPopularTVs")
+    String getMostPopularTvs();
+
     @GetMapping("SearchMovie/{title}")
     String findMoviesByTitle(@PathVariable("title") String title);
 

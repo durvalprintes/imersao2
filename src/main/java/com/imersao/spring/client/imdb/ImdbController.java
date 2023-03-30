@@ -2,11 +2,13 @@ package com.imersao.spring.client.imdb;
 
 import com.imersao.spring.sticker.Content;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
+@Controller
 @RequestMapping("/imdb")
 @RequiredArgsConstructor
 public class ImdbController {
@@ -14,29 +16,53 @@ public class ImdbController {
     private final ImdbService imdb;
 
     @GetMapping("/top-250-movies")
-    public List<Content> getTop250Movies(
+    public String getTop250Movies(
+            Model view,
             @RequestParam(name = "stickers", defaultValue = "5", required = false) Integer stickers) throws Exception {
-        return imdb.getTop250Movies(stickers);
+        return loadView(view, imdb.getTop250Movies(stickers));
     }
 
     @GetMapping("/top-250-tvs")
-    public List<Content> getTop250Tv(
+    public String getTop250Tvs(
+            Model view,
             @RequestParam(name = "stickers", defaultValue = "5", required = false) Integer stickers) throws Exception {
-        return imdb.getTop250Tvs(stickers);
+        return loadView(view, imdb.getTop250Tvs(stickers));
+    }
+
+    @GetMapping("/most-popular-movies")
+    public String getMostPopularMovies(
+            Model view,
+            @RequestParam(name = "stickers", defaultValue = "5", required = false) Integer stickers) throws Exception {
+        return loadView(view, imdb.getMostPopularMovies(stickers));
+    }
+
+    @GetMapping("/most-popular-tvs")
+    public String getMostPopularTvs(
+            Model view,
+            @RequestParam(name = "stickers", defaultValue = "5", required = false) Integer stickers) throws Exception {
+        return loadView(view, imdb.getMostPopularTvs(stickers));
     }
 
     @GetMapping("/movies/{title}")
-    public List<Content> findMoviesByTitle(
+    public String findMoviesByTitle(
+            Model view,
             @PathVariable("title") String title,
             @RequestParam(name = "stickers", defaultValue = "5", required = false) Integer stickers) throws Exception {
-        return imdb.findMoviesByTitle(title, stickers);
+        return loadView(view, imdb.findMoviesByTitle(title, stickers));
     }
 
     @GetMapping("/series/{title}")
-    public List<Content> findSeriesByTitle(
+    public String findSeriesByTitle(
+            Model view,
             @PathVariable("title") String title,
             @RequestParam(name = "stickers", defaultValue = "5", required = false) Integer stickers) throws Exception {
-        return imdb.findSeriesByTitle(title, stickers);
+        return loadView(view, imdb.findSeriesByTitle(title, stickers));
+    }
+
+    private String loadView(Model view, List<Content> contentList) {
+        view.addAttribute("title", "Lista de objetos IMDB");
+        view.addAttribute("contentList", contentList);
+        return "index";
     }
 
 }

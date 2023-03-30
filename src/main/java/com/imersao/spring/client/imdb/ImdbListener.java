@@ -56,9 +56,9 @@ public class ImdbListener {
         Graphics2D graphic = (Graphics2D) sticker.getGraphics();
         graphic.drawImage(original, 0, 0, width, height, null);
 
-        var font = new Font("Comic Sans MS", Font.BOLD, 128);
+        var font = new Font("Comic Sans MS", Font.BOLD, 200);
 
-        Shape textShape = new TextLayout("JAVA", font, graphic.getFontRenderContext()).getOutline(null);
+        Shape textShape = new TextLayout("IMERSÃO JAVA", font, graphic.getFontRenderContext()).getOutline(null);
 
         graphic.translate(
                 (sticker.getWidth() - textShape.getBounds().width) / 2,

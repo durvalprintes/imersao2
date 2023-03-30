@@ -29,6 +29,18 @@ public class ImdbService implements ImdbApi {
         return contents;
     }
 
+    public List<Content> getMostPopularMovies(Integer limit) throws Exception {
+        List<Content> contents = consumeItems(imdb.getMostPopularMovies());
+        startStickerGenerator(contents, limit);
+        return contents;
+    }
+
+    public List<Content> getMostPopularTvs(Integer limit) throws Exception {
+        List<Content> contents = consumeItems(imdb.getMostPopularTvs());
+        startStickerGenerator(contents, limit);
+        return contents;
+    }
+
     public List<Content> findMoviesByTitle(String title, Integer limit) throws Exception {
         List<Content> contents = consumeResults(imdb.findMoviesByTitle(title));
         startStickerGenerator(contents, limit);

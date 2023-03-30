@@ -16,5 +16,7 @@ public class Content {
     String title;
     String urlImage;
     String rating;
+    @JsonIgnore
+    String evaluation;
 }
 
