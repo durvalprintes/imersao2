@@ -1,8 +1,6 @@
 package com.imersao.spring.client.imdb;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.imersao.spring.sticker.Content;
+import com.imersao.spring.client.kafka.KafkaMessage;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
@@ -16,25 +14,23 @@ import java.io.InputStream;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.List;
 
 @Slf4j
 @Service
 public class ImdbListener {
 
     @KafkaListener(topics = "${topic.sticker}", groupId = "group")
-    public void listenGeneratorStickers(String contents) throws Exception {
+    public void listenGeneratorStickers(KafkaMessage contents) {
         log.info("Generate Stickers...");
-        List<Content> contentList = new ObjectMapper().readValue(contents, new TypeReference<>() {
-        });
-        contentList.forEach(content -> {
+        contents.getStickers().forEach(sticker -> {
             try {
-                log.info("Title {}...", content.getTitle());
+                log.info("Title {}...", sticker.getTitle());
 
                 createSticker(
-                        content.getTitle().replaceAll("\\W","_"),
-                        new URL(content.getUrlImage().replaceAll("\\._(.+).jpg$", ".jpg"))
-                                .openStream());
+                        sticker.getTitle().replaceAll("\\W", "_"),
+                        new URL(sticker.getUrlImage().replaceAll("\\._(.+).jpg$", ".jpg"))
+                                .openStream(),
+                        contents.getMessage());
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -42,9 +38,9 @@ public class ImdbListener {
         log.info("Generate Ok");
     }
 
-    private void createSticker(String title, InputStream image) throws Exception {
+    private void createSticker(String title, InputStream image, String message) throws Exception {
         final String formatSticker = "png";
-        final String outputPath = "data/image/sticker/imdb/";
+        final String outputPath = "src/main/resources/sticker/imdb/";
 
         BufferedImage original = ImageIO.read(image);
 
@@ -56,9 +52,9 @@ public class ImdbListener {
         Graphics2D graphic = (Graphics2D) sticker.getGraphics();
         graphic.drawImage(original, 0, 0, width, height, null);
 
-        var font = new Font("Comic Sans MS", Font.BOLD, 200);
+        var font = new Font("IMPACT", Font.BOLD, 128);
 
-        Shape textShape = new TextLayout("IMERSÃO JAVA", font, graphic.getFontRenderContext()).getOutline(null);
+        Shape textShape = new TextLayout(message, font, graphic.getFontRenderContext()).getOutline(null);
 
         graphic.translate(
                 (sticker.getWidth() - textShape.getBounds().width) / 2,

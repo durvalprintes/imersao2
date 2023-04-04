@@ -18,45 +18,57 @@ public class ImdbController {
     @GetMapping("/top-250-movies")
     public String getTop250Movies(
             Model view,
-            @RequestParam(name = "stickers", defaultValue = "5", required = false) Integer stickers) throws Exception {
-        return loadView(view, imdb.getTop250Movies(stickers));
+            @RequestParam(name = "stickers", defaultValue = "5", required = false) Integer stickers,
+            @RequestParam(name = "message", defaultValue = "JAVA", required = false) String message) throws Exception {
+        return loadView(view, imdb.getTop250Movies(stickers, message));
     }
 
     @GetMapping("/top-250-tvs")
     public String getTop250Tvs(
             Model view,
-            @RequestParam(name = "stickers", defaultValue = "5", required = false) Integer stickers) throws Exception {
-        return loadView(view, imdb.getTop250Tvs(stickers));
+            @RequestParam(name = "stickers", defaultValue = "5", required = false) Integer stickers,
+            @RequestParam(name = "message", defaultValue = "JAVA", required = false) String message) throws Exception {
+        return loadView(view, imdb.getTop250Tvs(stickers, message));
     }
 
     @GetMapping("/most-popular-movies")
     public String getMostPopularMovies(
             Model view,
-            @RequestParam(name = "stickers", defaultValue = "5", required = false) Integer stickers) throws Exception {
-        return loadView(view, imdb.getMostPopularMovies(stickers));
+            @RequestParam(name = "stickers", defaultValue = "5", required = false) Integer stickers,
+            @RequestParam(name = "message", defaultValue = "JAVA", required = false) String message) throws Exception {
+        return loadView(view, imdb.getMostPopularMovies(stickers, message));
     }
 
     @GetMapping("/most-popular-tvs")
     public String getMostPopularTvs(
             Model view,
-            @RequestParam(name = "stickers", defaultValue = "5", required = false) Integer stickers) throws Exception {
-        return loadView(view, imdb.getMostPopularTvs(stickers));
+            @RequestParam(name = "stickers", defaultValue = "5", required = false) Integer stickers,
+            @RequestParam(name = "message", defaultValue = "JAVA", required = false) String message) throws Exception {
+        return loadView(view, imdb.getMostPopularTvs(stickers, message));
     }
 
     @GetMapping("/movies/{title}")
     public String findMoviesByTitle(
             Model view,
             @PathVariable("title") String title,
-            @RequestParam(name = "stickers", defaultValue = "5", required = false) Integer stickers) throws Exception {
-        return loadView(view, imdb.findMoviesByTitle(title, stickers));
+            @RequestParam(name = "stickers", defaultValue = "5", required = false) Integer stickers,
+            @RequestParam(name = "message", defaultValue = "JAVA", required = false) String message) throws Exception {
+        return loadView(view, imdb.findMoviesByTitle(title, stickers, message));
     }
 
     @GetMapping("/series/{title}")
     public String findSeriesByTitle(
             Model view,
             @PathVariable("title") String title,
-            @RequestParam(name = "stickers", defaultValue = "5", required = false) Integer stickers) throws Exception {
-        return loadView(view, imdb.findSeriesByTitle(title, stickers));
+            @RequestParam(name = "stickers", defaultValue = "5", required = false) Integer stickers,
+            @RequestParam(name = "message", defaultValue = "JAVA", required = false) String message) throws Exception {
+        return loadView(view, imdb.findSeriesByTitle(title, stickers, message));
+    }
+
+    @GetMapping("/stickers")
+    @ResponseBody
+    public List<String> getGeneratedStickers() {
+        return imdb.getGeneratedStickers();
     }
 
     private String loadView(Model view, List<Content> contentList) {

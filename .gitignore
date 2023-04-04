@@ -33,4 +33,4 @@ build/
 .vscode/
 
 ### Imersão Java ###
-data/image/sticker/*
+src/main/resources/sticker/*
